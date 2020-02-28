@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>列車ロケーション情報</title>
+
+  <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+  <script src="https://momentjs.com/downloads/moment-timezone-with-data.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="bundle.js"></script>
+  <style>
+    #train_line_outbound {
+      position: relative;
+      border-bottom: 5px solid black;
+      margin: 100px 50px 0 50px;
+      width: 1300px;
+    }
+
+    #train_line_inbound {
+      border-bottom: 5px solid black;
+      margin: 10px 50px 50px 50px;
+      width: 1300px;
+    }
+
+    .station {
+      position: absolute;
+      height: 30px;
+      background-color: aqua;
+      width: 5px;
+      margin: unset;
+      z-index: 1;
+      top: -5px;
+    }
+
+    .station_name {
+      position: absolute;
+      margin: unset;
+      top: -80px;
+      width: 100px;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .train_rapid_outbound {
+      position: absolute;
+      height: 5px;
+      width: 5px;
+      background-color: lightgreen;
+      z-index: 2;
+    }
+
+    .train_identifier_outbound {
+      position: absolute;
+      width: 50px;
+      z-index: 2;
+      top: -20px;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    .train_rapid_inbound {
+      position: absolute;
+      height: 5px;
+      width: 5px;
+      background-color: lightgreen;
+      z-index: 2;
+      top: 15px;
+    }
+
+    .train_identifier_inbound {
+      position: absolute;
+      width: 50px;
+      z-index: 2;
+      top: 25px;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    .train_local_outbound {
+      position: absolute;
+      height: 5px;
+      width: 5px;
+      background-color: lightblue;
+      z-index: 2;
+    }
+
+    .train_local_inbound {
+      position: absolute;
+      height: 5px;
+      width: 5px;
+      background-color: lightblue;
+      z-index: 2;
+      top: 15px;
+    }
+
+    h1 {
+      text-align: center;
+      background-color: lightgreen;
+    }
+
+    h2 {
+      text-align: center;
+      background-color: bisque;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>常磐線快速(品川〜取手間)運行状況</h1>
+  <h2>
+    現在時刻:<a id="time"></a>[<a id="dia_type">平日</a>ダイヤ]
+  </h2>
+</header>
+
+<div id="parent">
+  <div id="train_line_outbound">
+    <div id="trains"></div>
+  </div>
+</div>
+
+<div id="train_line_inbound"></div>
+
+<hr/>
+
+<ol>
+  <li>
+    データに関して<br/>
+    <p>
+      本アプリケーション等が利用する公共交通データは、東京公共交通オープンデータチャレンジにおいて提供されるものです。<br>
+      公共交通事業者により提供されたデータを元にしていますが、必ずしも正確・完全なものとは限りません。<br>
+      本アプリケーションの表示内容について、公共交通事業者への直接の問合せは行わないでください。<br>
+    </p>
+  </li>
+  <li>
+    表示される内容に関して
+    <p>
+      以下の不具合を確認しています。
+      <ol>
+        <li>
+          2つの車両の現在位置が重なって表示されてしまう。<br>
+          →列車の次駅の出発時間を元に移動速度を決定しているために起こる現象です。
+        </li>
+        <li>
+          特急・中距離列車が同じ色で表示されてしまう。<br>
+          →開発時のミスによるものです。近日中に修正を予定しております。
+        </li>
+        <li>
+          成田線の車両現在位置が柏・我孫子で止まり、表示されたままになってしまう。<br>
+          →仕様です。リロードすると消えます。
+        </li>
+        <li>
+          常磐線遅延時に実際と異なる現在位置が表示される。<br>
+          →仕様です。遅延時の位置調整機能の開発はなんとか可能ですが、ダイヤが大きく乱れた際の修正はほぼ不可能です。(ダイヤ変更の情報を取得できない)
+        </li>
+      </ol>
+    </p>
+  </li>
+</ol>
+
+
+</body>
+</html>
