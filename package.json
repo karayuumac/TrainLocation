@@ -10,7 +10,7 @@
       "reflect-metadata": "^0.1.10",
       "regenerator-runtime": "^0.13.3",
       "sqlite3": "^4.1.1",
-      "typeorm": "0.2.22",
+      "typeorm": "0.2.25",
       "uniq": "^1.0.1"
    },
    "main": "dist/main.js",
